@@ -3,9 +3,21 @@
 Ever wondered why your AWS bill keeps growing even when you’re not using all your servers?
 That’s often because of old EBS snapshots — backup copies of your data that just sit there, unused, still costing money.
 
-How it works (in simple terms):
+This project introduces an AWS Lambda-based automation that helps identify and delete such stale snapshots, keeping your AWS environment clean and cost-efficient.
 
-The Lambda function first gets all EBS snapshots in your account.
-Then it checks all EC2 instances that are still active (either running or stopped).
-For each snapshot, it verifies whether the volume it belongs to is still linked with any active EC2 instance.
-If not, it means the snapshot is no longer in use, so the function deletes it to free up space and save money.
+🧩 HOW IT WORKS (IN SIMPLE TERMS)
+
+The Lambda function first retrieves all EBS snapshots from your AWS account.
+It then checks all EC2 instances that are currently active (running or stopped).
+For each snapshot, it verifies whether the associated volume is linked to any active EC2 instance.
+If a snapshot’s volume is not connected to any instance, it is marked as unused and safely deleted.
+
+💡 This automatic cleanup reduces storage costs and ensures efficient resource management.
+
+🛠️ TOOLS & TECHNOLOGIES USED
+
+AWS Lambda – Serverless automation to execute the cleanup logic
+Amazon EC2 – Source of snapshot and instance information
+Amazon EBS – Stores snapshots that are analyzed and managed
+AWS IAM – Provides permissions for Lambda to access EC2 and EBS resources
+Python (Boto3 SDK) – Used for scripting and interaction with AWS services
